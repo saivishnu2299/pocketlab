@@ -1,0 +1,15 @@
+* text=auto
+*.c text eol=lf
+*.h text eol=lf
+*.py text eol=lf
+*.sh text eol=lf
+*.command text eol=lf
+pocketlab text eol=lf
+*.ttf binary
+*.png binary
+*.bmp binary
+runtime/Apps/PocketLab/pocketlab binary
+src/** -text
+vendor/** -text -whitespace
+assets/** -text -whitespace
+runtime/** -text -whitespace

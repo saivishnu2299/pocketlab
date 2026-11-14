@@ -1,0 +1,18 @@
+build/
+dist/
+projects/
+data/
+__pycache__/
+*.pyc
+*.dSYM/
+.DS_Store
+._*
+.env
+.env.*
+!.env.example
+templates/*/app
+templates/*/app.incoming
+
+# User app sources stay local; include only the workspace guide.
+/miniapps/*
+!/miniapps/README.md

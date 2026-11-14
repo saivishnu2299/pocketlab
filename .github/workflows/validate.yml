@@ -1,0 +1,35 @@
+name: Validate local release artifacts
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  validate:
+    strategy:
+      matrix:
+        os: [macos-14, ubuntu-24.04]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5
+        with:
+          python-version: '3.12'
+      - name: macOS test dependencies
+        if: runner.os == 'macOS'
+        run: brew install sdl2
+      - name: Linux test dependencies
+        if: runner.os == 'Linux'
+        run: sudo apt-get update && sudo apt-get install -y clang make libsdl2-dev libarchive-tools
+      - run: make test
+      - run: make brick
+      - run: python3 tests/sdk_smoke.py
+      - run: make renders
+      - run: python3 tools/release.py runtime
+      - run: make check
+      - run: python3 tools/release.py bundle
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: pocketlab-${{ matrix.os }}
+          path: dist/

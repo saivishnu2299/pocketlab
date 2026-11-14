@@ -1,0 +1,22 @@
+name: Bug report
+description: Report an installation, SDK, or device problem.
+body:
+  - type: textarea
+    attributes:
+      label: What happened?
+      description: Include steps and expected behavior. For SD setup, say whether you installed on a working card, prepared a blank card, or resumed a copy. Include the last reported phase.
+    validations:
+      required: true
+  - type: input
+    attributes:
+      label: PocketLAB version, host OS, Brick model and stock firmware
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: Diagnostics
+      description: Paste relevant doctor/log output after removing personal paths, serial numbers and app data. Do not attach your card or compiler cache.
+  - type: textarea
+    attributes:
+      label: What was verified on the actual device?
+      description: Distinguish native previews from physical controls/display/peripherals.

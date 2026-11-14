@@ -1,0 +1,11 @@
+name: Feature request
+description: Propose an improvement.
+body:
+  - type: textarea
+    attributes:
+      label: User problem and desired behavior
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: Device, controls, and peripheral requirements

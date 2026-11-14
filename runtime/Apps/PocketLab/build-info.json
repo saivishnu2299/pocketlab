@@ -1,0 +1,50 @@
+{
+  "binary": {
+    "glibc": [
+      "GLIBC_2.17"
+    ],
+    "needed": [
+      "libSDL2-2.0.so.0",
+      "libm.so.6",
+      "libpthread.so.0",
+      "libc.so.6"
+    ],
+    "sha256": "95ee93e4ae16357991de97a238b01f4bd8dff11e9a43df691f5ee7633e0cb890"
+  },
+  "build": {
+    "sdl_headers": "2.26.1",
+    "sdl_link_input": "generated from pinned upstream exports; not a runtime",
+    "target": "aarch64-linux.4.9-gnu.2.17",
+    "zig": "0.14.1"
+  },
+  "builder_sha256": "4e246f7037bb2c2e377b5adc218e7129aeac9df8e3c5fd601391dfd445a30ec9",
+  "core_sources": {
+    "assets/Barlow-Regular.ttf": "95aa02c7c43096e0dd44d787ba6216864a67157e402adab59b35572e0c1577ea",
+    "assets/Barlow-SemiBold.ttf": "86577cb32f8abe3673db53ca0f4221e6856751a4f6730c867e00f720f8bb1fc5",
+    "assets/IBMPlexMono-Regular.ttf": "6a3412f058c7d8dfd9170c41e85ade48e5156ecb89356110ca57a0a27734af46",
+    "assets/LICENSE-stb.txt": "0459bce8ce9b9b045d20d9c48192226d302f0cce81b151ba71189b2a10c8a8fc",
+    "assets/OFL-IBM-Plex.txt": "7e6b2818edbd8f6a01ae80641cc8f16a51080d08fb4e532be3a0b6f74adb07da",
+    "assets/OFL.txt": "186d750eb496a4c17a76385f82be6aea2ac1cf2de074a811d63786cf374ea73f",
+    "src/app.h": "c289624e6816df72730f56830353e6e7c59c7e0d6d353f339615807b008cb5d8",
+    "src/audio.c": "e125fc318038e5868e3de62602751350dc970c3ad50a028091310964000c9180",
+    "src/audio.h": "36071e8b8ad69f3705654c64a2964312d54b52121b97f21430085d770ad53b89",
+    "src/control.c": "1d648fc3182895ef4f3db3217bd373a3f83c1a9cd03647280d6400c7ec43887d",
+    "src/control.h": "17aa0c4e9adebdefe61a6011512eeb4c550ae4d25bea73e80d67b01475b1a44a",
+    "src/cover.c": "2eab701bfe2df66da5d538f3d34628678eb3c6491497ed87b651e3e85f803dbb",
+    "src/cover.h": "e263285ca0c4749f133e003b427023b7729946088f33fedc4d20474ad09d688c",
+    "src/game.c": "d024b0c225e1818173ca58ae4757f1850d7a31958b182b9f18e1520eb55c7839",
+    "src/game.h": "37ae6e252c6a1a10c4940e0cb873b2b29eb1ae375ef55f5f55613a59087f69f2",
+    "src/main.c": "cfe9d65fda02955b24abb68da02b4b6a33a0b597cec25873ffcd75507ef9ea88",
+    "src/ui.c": "ccc12988d797120d824f9604e92ac237f7c1f8965140cdb7dda09c3514136a1f",
+    "src/ui.h": "9c742dfefca858a891efc7a93e1b02f5a22cd93f9a730a191d9fb2077f227a6a",
+    "src/usb.c": "2d508f021e79617b91f7c74565f7c1a49ebcfa19e0bade8772176cd24e08b199",
+    "src/usb.h": "5dd10f8ed0212dea2830cba7355f562e3f4d9b58686269e4721ac88e0361060d",
+    "vendor/stb_truetype.h": "ecd30b05e0dd4fea3a13c26810dd9e1992dc379049482c393d5a19e6b5090aab"
+  },
+  "default_apps": [
+    "esp32",
+    "starfall"
+  ],
+  "target": "TG4040-stock-arm64",
+  "version": "1.1.0"
+}
