@@ -5,6 +5,7 @@
 - `./pocketlab update --sd CARD` or `--usb --confirm-model TG4040` runs `git pull --ff-only` and then updates PocketLAB on the Brick. It stops before changing anything when tracked files have local edits. Mini apps in `miniapps/` are never touched.
 - `doctor` warns, without failing, when PocketLAB's own tracked files have local edits.
 - README explains where to keep mini-app projects so that updates leave them alone.
+- Two optional agent skills in `skills/`: `pocketlab-device` installs, updates, checks and recovers PocketLAB, and `pocketlab-miniapp` creates, builds and runs mini apps. Linked into an agent, they update with the clone and defer to its AGENTS.md and SDK.md. `tests/test_skills.py` checks the commands and flags in the skills and guides against the CLI.
 
 ## 1.1.0 — first public release
 

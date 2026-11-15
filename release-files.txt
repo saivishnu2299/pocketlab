@@ -36,6 +36,8 @@ packaging/config.json
 packaging/launch.sh
 pocketlab
 release-files.txt
+skills/pocketlab-device/SKILL.md
+skills/pocketlab-miniapp/SKILL.md
 src/app.h
 src/audio.c
 src/audio.h
@@ -68,6 +70,7 @@ tests/test_recovery.py
 tests/test_release.py
 tests/test_repo_update.py
 tests/test_setup.py
+tests/test_skills.py
 tests/test_card_workflows.py
 tests/test_usb_setup.py
 tests/usb_cli.c

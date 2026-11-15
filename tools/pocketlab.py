@@ -231,7 +231,7 @@ def watch_app(app,serial):
         time.sleep(.5)
 
 
-def main():
+def build_parser():
     parser=argparse.ArgumentParser(description=__doc__)
     commands=parser.add_subparsers(dest='command',required=True)
     p=commands.add_parser('new',help='Create a ready-to-edit independent mini app');p.add_argument('app');p.add_argument('--name')
@@ -265,6 +265,11 @@ def main():
     p=commands.add_parser('open');p.add_argument('app');p.add_argument('--usb',action='store_true',required=True);p.add_argument('--serial')
     for name in ('status','library','logs'):
         p=commands.add_parser(name);p.add_argument('--usb',action='store_true',required=True);p.add_argument('--serial')
+    return parser
+
+
+def main():
+    parser=build_parser()
     args=parser.parse_args()
     if args.command=='new':new_app(args.app,args.name)
     elif args.command=='setup':

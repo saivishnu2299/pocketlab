@@ -83,6 +83,26 @@ Then open PocketLAB on the Brick once to finish its startup check. On the Brick,
 
 **Keep your mini apps in `miniapps/`.** Git ignores that folder, so updates never change your app projects. You can also keep them in a folder outside this repository. Avoid saving them anywhere else inside the repository. If you have edited PocketLAB's own files, `update` stops before changing anything and tells you which files those are; `./pocketlab doctor` warns about them as well.
 
+## Agent skills (optional)
+
+The `skills/` folder has two step-by-step guides for coding agents. **pocketlab-device** installs, updates, checks and recovers PocketLAB on the Brick. **pocketlab-miniapp** creates, builds and runs mini apps.
+
+Without installing anything, an agent working in this repository reads AGENTS.md, which tells it where these files are. It can then read them like any other document. Your agent doesn't load them as skills on its own until you install them. Installing them lets the agent choose the right one by itself, in any folder, including an app project kept outside this repository.
+
+To install them, link the two folders instead of copying them. `./pocketlab update` then refreshes them along with the rest of your clone. Run one of these from the repository folder:
+
+```sh
+# Claude Code: creates ~/.claude/skills/pocketlab-device and ~/.claude/skills/pocketlab-miniapp
+mkdir -p ~/.claude/skills
+ln -s "$PWD/skills/pocketlab-device" "$PWD/skills/pocketlab-miniapp" ~/.claude/skills/
+
+# Codex: creates ~/.agents/skills/pocketlab-device and ~/.agents/skills/pocketlab-miniapp
+mkdir -p ~/.agents/skills
+ln -s "$PWD/skills/pocketlab-device" "$PWD/skills/pocketlab-miniapp" ~/.agents/skills/
+```
+
+Each link must be a folder named after the skill with `SKILL.md` directly inside it. Start a new agent session afterwards so it picks them up. For another agent, link the same two folders into the personal skills folder named in that agent's documentation. If you move your clone, create the links again. If you copied the folders instead of linking them, each skill checks your clone and follows its newer copy when the two differ.
+
 ## The included apps
 
 - **ESP32 detector:** connect a board to the rear HOST USB-C port to see what is attached. It is careful to tell a serial bridge apart from a verified ESP32. An optional chip check, which you confirm on screen, may reset the board but never writes flash.
