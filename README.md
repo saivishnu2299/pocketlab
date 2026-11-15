@@ -67,7 +67,7 @@ D-pad or left stick to select, **A** to open, **B** to go back, **X** for settin
 
 ## Status
 
-PocketLAB targets the stock TG4040 firmware. It has been installed from an SD card and used on a real Brick Pro, but no minimum firmware version has been established yet. Setup is tested on macOS (Apple Silicon); Linux is configured but less tested, and Windows users should use the device ZIP. Details are in [compatibility](docs/COMPATIBILITY.md) and [validation](docs/VALIDATION.md). If something goes wrong, see [troubleshooting](docs/TROUBLESHOOTING.md) or open an issue.
+PocketLAB targets the stock TG4040 firmware and has been tested on a real Brick Pro running firmware 1.1.1. No minimum firmware version has been established. Setup is tested on macOS (Apple Silicon); Linux is configured but less tested, and Windows users should use the device ZIP. Details are in [compatibility](docs/COMPATIBILITY.md), and untested areas are listed under [known limitations](docs/VALIDATION.md#known-limitations). If something goes wrong, see [troubleshooting](docs/TROUBLESHOOTING.md) or open an issue. Report security problems privately as described in [SECURITY.md](SECURITY.md).
 
 ## Develop PocketLAB itself
 

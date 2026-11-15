@@ -1,10 +1,42 @@
-# Validation status — unpublished release preparation
+# Validation record
+
+This file records what has been checked on real hardware, what has only been checked on a computer, and what is still untested. A passing desktop preview, CI run or file verification is not proof that something works on the Brick, so hardware results are listed separately.
+
+## Current status
+
+| Area | Status |
+| --- | --- |
+| SD-card setup on macOS (Apple Silicon) | Verified on a real 7.7 GB card from a clean copy of the source ZIP, with only macOS's bundled Python 3.9: first install, update, rollback, blank-card preparation, interrupt and resume, and eject. Hashing every file on the card showed that only PocketLAB's own files changed. |
+| Boot on the Brick | Verified on a TG4040 running stock firmware **1.1.1** (Linux 4.9.191, SDL 2.30.8). A blank card prepared by `prepare-card --new-card` booted, and PocketLAB 1.1.0 started at 1024×768 and exited cleanly. |
+| Apps-screen icon | Verified on the Brick: one icon, after the double-icon fix of 14 November 2026. |
+| ESP32 detector and Starfall | Both worked on the Brick from an earlier card on 11 November 2026. Earlier development testing covered the controls, display, Starfall gameplay and audio, and passive ESP32 detection. The app code is frozen and has not changed since. |
+| Mini apps over USB (`run`, `watch`) | Verified with the original development build. Not yet repeated from the public repository. |
+| Linux and Intel macOS hosts | Configured, with pinned toolchains and a CI workflow for macOS and Ubuntu. Not yet run on real machines. |
+| Windows | No setup tools. Install by copying the device ZIP by hand. |
+
+## Known limitations
+
+These are untested or unsupported. Reports from real devices are welcome; see [Reporting results](#reporting-results).
+
+- **Firmware coverage.** Only stock firmware 1.1.1 has been tested. No minimum supported version has been established, and other stock releases may behave differently.
+- **Power loss during an update.** Interrupted copies, startup rollback and recovery are covered by automated tests, FAT32 disk images and a card-reader `recover` run on a real card. Losing power on the Brick during the first launch after an update has not been tried.
+- **Device edge cases.** Suspend and resume, a full or read-only card, and low-space warnings have not been exercised on the Brick.
+- **USB deployment failures.** Cable disconnects and other ADB failures during `run` or `watch` are covered by mocked tests only.
+- **ESP32 boards.** Passive detection was checked with the boards available during development. The optional chip check, and boards or USB bridges beyond those, are unverified. A recognised USB bridge does not prove which chip is attached.
+- **Cards and formatting.** One 7.7 GB card has been tested. The `format-card` helper is macOS only and has formatted that one card.
+- **Other hosts.** Linux and Intel macOS setup has not been run outside CI configuration.
+
+## Reporting results
+
+Open an issue with the PocketLAB version, the Brick's firmware version (Settings → About), your computer's OS, the command you ran and its output. Remove personal paths, serial numbers and app data first. Say what you checked on the Brick itself and what you only checked on the computer.
+
+## Test history
 
 The shell source, assets, fonts, and bundled vendor header are frozen in tests/baseline/ui-source.json. The public-name change to PocketLAB intentionally updates branding strings in main.c and control.c and the corresponding render baselines; app logic, assets, and controls remain unchanged. Only ESP32 detector and Starfall are default apps. No personal projects or their data belong to this release.
 
 Local preparation completed on 10 November 2026. Prior development-device observations apply to the original shell, not automatically to new provisioning/recovery tools.
 
-## Initial preparation checks (before the PocketLAB name change)
+### Initial preparation checks (before the PocketLAB name change)
 
 - Environment: macOS 27.2.1 arm64, Python 3.15.2, Apple Clang 21.0.0, native SDL 2.32.10. ARM builds use pinned Zig 0.14.1 and SDL 2.26.1 headers.
 - At initial preparation, the 21 source/asset/vendor files matched their original SHA-256 baseline byte-for-byte. The shell implementation and default app artwork were not rewritten.
@@ -17,23 +49,22 @@ Local preparation completed on 10 November 2026. Prior development-device observ
 - The official stock-base archive matched its pinned SHA-256. Extraction and a temporary-directory card simulation verified 15,927 stock files, installation, and an update preserving synthetic user app/data files. No physical card was used.
 - Shell recovery fixtures covered successful startup, failed startup, interrupted copying, corrupt-backup rejection, first installation without a controller, and concurrent installer refusal. Card-reader recovery and selective backup pruning were tested against temporary trees.
 - Source/device archive inventories, checksums, runtime provenance, private-path checks, Git-index export integrity, and executable permissions were checked. User projects, build caches, vendor SD contents, saved data, and local logs are excluded from public artifacts.
-- No remote repository, publication, real-device deployment, card formatting, or firmware operation was performed. CI is configured but has not run on a hosted runner.
+- No real-device deployment, card formatting, or firmware operation was performed in this round.
 
-
-## PocketLAB naming update — 10 November 2026
+### PocketLAB naming update — 10 November 2026
 
 - Public folder, documentation, launcher label, UI wordmarks, messages, template labels, and release archive names now use PocketLAB. The installed `Apps/PocketLab` path, backup names, package ID, commands, and environment variables are preserved for upgrade/data compatibility.
 - Only branding strings changed in the shell source. All 13 before/after render comparisons matched outside the name regions; the game, pause, and game-over images were completely unchanged. The approved baselines and three documentation screenshots were updated for this requested rename.
 - The ARM rebuild, full `make test` suite, all 13 approved render comparisons, and SDK lifecycle/build smoke test passed locally. The rebuilt runtime SHA-256 is `95ee93e4ae16357991de97a238b01f4bd8dff11e9a43df691f5ee7633e0cb890`.
-- Fresh-cache archive validation above describes the initial build, not a repeat of that procedure for this branding rebuild. Hardware acceptance below remains pending.
+- Fresh-cache archive validation above describes the initial build, not a repeat of that procedure for this branding rebuild.
 
-## Physical SD-card setup — 11 November 2026
+### Physical SD-card setup — 11 November 2026
 
 - The first real format-plan attempt exposed a macOS property mismatch: diskutil reports WholeDisk, while the helper checked Whole. The helper now checks WholeDisk; regression coverage accepts an external whole disk and still rejects a non-whole disk. All 12 setup tests and seven release tests passed.
 - Explicitly authorized formatting of one approximately 7.7 GB external USB SD card completed through `format-card`. The resulting card was verified as FAT32 with an MBR partition table and the POCKETLAB volume label.
-- The interrupted stock copy was completed while preserving existing files. PocketLAB and the added files passed checksums, and the user reported that PocketLAB and both included apps worked on the Brick.
+- The interrupted stock copy was completed while preserving existing files. PocketLAB and the added files passed checksums, and the maintainer confirmed that PocketLAB and both included apps worked on the Brick.
 
-## Faster setup and resume — 12 November 2026
+### Faster setup and resume — 12 November 2026
 
 - Guided setup detected the connected FAT32 card. The installed runtime verified in about 0.4 seconds. A before-and-after check confirmed that the installed files, saved settings and neighboring app files examined on the card retained their hashes and modification times.
 - With the same cached stock package on disposable macOS FAT32 disk images, complete preparation took about 64 seconds with the revised installer and 98 seconds with the previous installer. These are disk-image timings.
@@ -42,7 +73,7 @@ Local preparation completed on 10 November 2026. Prior development-device observ
 - A runtime update on a populated FAT32 image preserved a test mini app and a 16 MiB save. Both the host recovery command and the generated launcher recovery script restored the previous runtime and preserved the same files.
 - The rebuilt ARM64 binary matched the bundled runtime byte-for-byte. The host tests, including 24 card-workflow regression tests, the SDK smoke test, and 13 render comparisons passed. The card-workflow tests also passed from a clean extraction of the source ZIP. The revised fresh-card flow has been tested at the filesystem level and still needs a boot test on a physical Brick.
 
-## Public-release SD card test — 14 November 2026
+### Public source SD-card test — 14 November 2026
 
 Every step ran from a fresh extraction of the public source ZIP. Only macOS's bundled Python 3.9.6 was available (`PATH=/usr/bin:/bin:/usr/sbin:/sbin`), and there was no download or compiler cache. The hardware was one real 7.7 GB SD card in a USB reader. The commands were the ones in the AGENTS.md setup playbook: `doctor`, `cards`, then the printed `setup` or `prepare-card` command.
 
@@ -57,26 +88,13 @@ Every step ran from a fresh extraction of the public source ZIP. Only macOS's bu
 - **Final one-shot run:** with the final code, `format-card` followed by `prepare-card --new-card` finished with exit status 0 in 41 minutes. It left no preparation folder and no macOS metadata in `Apps/PocketLab`. After a cold remount, 15,927/15,927 stock files and 14/14 runtime files matched, and there were no unexpected files. `cards` then reported `stock-with-pocketlab 1.1.0`.
 - **Eject:** the first `setup --sd … --eject` was blocked by Spotlight (`mds`), which was indexing the freshly mounted card, and setup exited with status 1 even though everything was verified. Eject now retries for about 16 seconds and otherwise prints a non-fatal file-manager instruction. With that change, the playbook's `setup --sd /Volumes/POCKETLAB --eject` verified the card and ejected it on the first attempt (exit status 0).
 
-Still needed on the Brick: boot this card, check the new Apps-screen icon, open PocketLAB, and use ESP32 detector and Starfall.
+### Brick boot test and icon fix — 14 November 2026
 
-## Brick boot test and icon fix — 14 November 2026
-
-- The user booted the card on the Brick. The device log on the card shows that PocketLAB 1.1.0 started at 1024×768 with the `opengles2` renderer and exited with status 0.
+- The card prepared by the final one-shot run booted on a TG4040 running stock firmware 1.1.1. The device log on the card shows that PocketLAB 1.1.0 started at 1024×768 with the `opengles2` renderer and exited with status 0.
 - The Apps screen showed two overlapping PocketLAB icons. Cause: `config.json` set `icon.png` as both `icontop` and `icon`, and the stock launcher draws `icon` as a second, larger layer. Every stock app and emulator config on the card sets `icontop` and leaves `"icon": ""`. The fix uses the same convention, and `release.py` now rejects a runtime that sets both fields.
 - The rebuilt ARM64 binary was byte-identical. `make test` (66 tests) and `make check` passed. `setup --sd /Volumes/POCKETLAB` staged two changed files (`config.json` and the manifest) with a rollback backup. A comparison of all 32,767 files before and after showed only those two files changed; the only additions were the backup and the pending-startup record under `data/`.
+- On the Brick, the Apps screen then showed a single PocketLAB icon.
 
-Still needed on the Brick: confirm that the Apps screen shows a single PocketLAB icon, then open PocketLAB once so that it completes the pending startup check.
+## Scope of the automated tests
 
-## Required physical acceptance before publication
-
-- [ ] Use a clean host without the maintainer's private cache.
-- [ ] Prepare a separate empty FAT32/MBR card from the pinned stock base; boot an actual TG4040 and open PocketLAB.
-- [ ] Confirm exactly the two default cards, original appearance, physical controls, Starfall gameplay/audio/settings/scores, and passive ESP32 insertion/removal.
-- [ ] Exercise the optional ROM probe on intended supported boards; record driver/board limits.
-- [ ] Verify first USB install, native graphics/audio/input, app readiness, watch edits, disconnection, standalone reopen, and persistence.
-- [ ] Verify existing-card upgrade preserves unrelated files and user app/data hashes.
-- [ ] Verify shell update interruption/startup recovery on FAT, including power interruption, and recovery from an older launcher.
-- [ ] Verify USB failure handling, read-only/full card behavior, suspend/resume, and low-space diagnostics.
-- [ ] Execute the advertised host/firmware compatibility matrix; record exact versions.
-
-No real card formatting, device installation, firmware operation, or publication is performed by the local validation suite. Tests use temporary directories and mocked disk/transport commands. Unchecked items remain publication gates.
+No real card formatting, device installation, or firmware operation is performed by the automated tests. They use temporary directories and mocked disk and transport commands.

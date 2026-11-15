@@ -1,5 +1,7 @@
 # Contributing
 
+Everyone taking part follows the [code of conduct](CODE_OF_CONDUCT.md). Report security problems privately as described in [SECURITY.md](SECURITY.md).
+
 Read AGENTS.md and SDK.md. Ordinary mini apps belong in ignored miniapps/ or a separate directory. The default library contains only ESP32 detector and Starfall; templates/native-app is scaffolding, not an installed app.
 
 For shell/tooling changes run make test, make brick, make renders, regenerate the runtime with tools/release.py runtime, and run make check. Keep UI changes separate and explicitly reviewed. The frozen source/artwork baseline catches accidental UI drift.

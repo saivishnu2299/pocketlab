@@ -9,7 +9,7 @@ body:
       required: true
   - type: input
     attributes:
-      label: PocketLAB version, host OS, Brick model and stock firmware
+      label: PocketLAB version, host OS, Brick model and stock firmware (Settings → About)
     validations:
       required: true
   - type: textarea

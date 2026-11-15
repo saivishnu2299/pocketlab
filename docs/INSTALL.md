@@ -30,11 +30,11 @@ On macOS, a terminal or agent app needs permission to read removable volumes. If
 
 ## Firmware and SD-card requirements
 
-Use a TrimUI Brick Pro TG4040 running its stock firmware. **A minimum supported firmware version and an exact tested firmware-version matrix have not yet been established.** Do not assume every stock firmware release is compatible.
+Use a TrimUI Brick Pro TG4040 running its stock firmware. PocketLAB has been tested on **stock firmware 1.1.1** (Settings → About). No minimum supported version has been established, so other releases may behave differently.
 
 The official SD-base package `v1.0.0-20260626` supplies card contents for new-card preparation. Its version identifies that SD download; it is **not a verified minimum device-firmware version**. PocketLAB setup prepares card files and installs the app without updating or flashing device firmware. Do not upgrade or downgrade firmware solely to match the SD-base tag.
 
-One prepared card has booted and run both included apps on a TG4040. An end-to-end boot from the revised blank-card installer and its startup recovery still need physical testing. Computer-side diagnostics and successful file verification do not establish firmware compatibility. See the [compatibility record](COMPATIBILITY.md#firmware-and-sd-base-versions) for the evidence available and the [remaining validation gates](VALIDATION.md#required-physical-acceptance-before-publication).
+A blank card prepared with `prepare-card --new-card` has booted on a TG4040 and started PocketLAB. Startup rollback after a failed update has been tested on a computer but not on the Brick. Computer-side diagnostics and successful file verification do not establish firmware compatibility. See the [compatibility record](COMPATIBILITY.md#firmware-and-sd-base-versions) for the evidence available and the [known limitations](VALIDATION.md#known-limitations).
 
 ## Get the project
 
