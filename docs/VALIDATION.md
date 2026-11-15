@@ -59,6 +59,14 @@ Every step ran from a fresh extraction of the public source ZIP. Only macOS's bu
 
 Still needed on the Brick: boot this card, check the new Apps-screen icon, open PocketLAB, and use ESP32 detector and Starfall.
 
+## Brick boot test and icon fix — 14 November 2026
+
+- The user booted the card on the Brick. The device log on the card shows that PocketLAB 1.1.0 started at 1024×768 with the `opengles2` renderer and exited with status 0.
+- The Apps screen showed two overlapping PocketLAB icons. Cause: `config.json` set `icon.png` as both `icontop` and `icon`, and the stock launcher draws `icon` as a second, larger layer. Every stock app and emulator config on the card sets `icontop` and leaves `"icon": ""`. The fix uses the same convention, and `release.py` now rejects a runtime that sets both fields.
+- The rebuilt ARM64 binary was byte-identical. `make test` (66 tests) and `make check` passed. `setup --sd /Volumes/POCKETLAB` staged two changed files (`config.json` and the manifest) with a rollback backup. A comparison of all 32,767 files before and after showed only those two files changed; the only additions were the backup and the pending-startup record under `data/`.
+
+Still needed on the Brick: confirm that the Apps screen shows a single PocketLAB icon, then open PocketLAB once so that it completes the pending startup check.
+
 ## Required physical acceptance before publication
 
 - [ ] Use a clean host without the maintainer's private cache.

@@ -71,8 +71,12 @@ def verify_runtime(folder=RUNTIME, match_source=True):
     actual = {str(p.relative_to(folder)) for p in folder.rglob('*') if p.is_file()}
     if actual != set(manifest) | {'manifest.sha256.json'} or any(p.is_symlink() for p in folder.rglob('*')):
         raise ValueError('Unexpected runtime files; apps/data must be empty')
-    if json.loads((folder/'config.json').read_text()).get('package') != 'org.pocketlab.shell':
+    config = json.loads((folder/'config.json').read_text())
+    if config.get('package') != 'org.pocketlab.shell':
         raise ValueError('Wrong runtime identity')
+    # The stock launcher draws "icon" as a second, larger layer behind "icontop".
+    if config.get('icontop') != 'icon.png' or config.get('icon') != '':
+        raise ValueError('Launcher icon must be set only as icontop, with an empty icon field')
     info = json.loads((folder/'build-info.json').read_text())
     binary = elf_info(folder/'pocketlab')
     if binary['sha256'] != info['binary']['sha256']:

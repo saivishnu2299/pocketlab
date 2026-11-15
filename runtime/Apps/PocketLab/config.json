@@ -2,7 +2,7 @@
   "package": "org.pocketlab.shell",
   "label": "PocketLAB",
   "icontop": "icon.png",
-  "icon": "icon.png",
+  "icon": "",
   "launch": "launch.sh",
   "description": "A portable workbench. USB instruments and mini apps."
 }

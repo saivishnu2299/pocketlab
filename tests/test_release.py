@@ -47,6 +47,16 @@ class ReleaseTests(unittest.TestCase):
             p=target/'manifest.sha256.json';data=json.loads(p.read_text());data['../outside']='0'*64;p.write_text(json.dumps(data))
             with self.assertRaises(ValueError):release.verify_runtime(target)
 
+    def test_launcher_icon_is_drawn_once(self):
+        self.assertEqual(json.loads((release.RUNTIME/'config.json').read_text())['icon'],'')
+        with tempfile.TemporaryDirectory() as tmp:
+            target=Path(tmp)/'runtime';shutil.copytree(release.RUNTIME,target)
+            config=target/'config.json';data=json.loads(config.read_text());data['icon']='icon.png'
+            config.write_text(json.dumps(data))
+            manifest=target/'manifest.sha256.json';hashes=json.loads(manifest.read_text())
+            hashes['config.json']=release.digest(config);manifest.write_text(json.dumps(hashes))
+            with self.assertRaisesRegex(ValueError,'icontop'):release.verify_runtime(target)
+
     def test_neutral_template_contract(self):
         with tempfile.TemporaryDirectory() as tmp,contextlib.redirect_stdout(io.StringIO()):
             app=pocketlab.new_app(Path(tmp)/'test-instrument','Test instrument')
