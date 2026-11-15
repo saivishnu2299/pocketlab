@@ -1,14 +1,11 @@
 # Changelog
 
-## Unreleased
+## 1.1.0 — first public release
 
 - `./pocketlab update --sd CARD` or `--usb --confirm-model TG4040` runs `git pull --ff-only` and then updates PocketLAB on the Brick. It stops before changing anything when tracked files have local edits. Mini apps in `miniapps/` are never touched.
 - `doctor` warns, without failing, when PocketLAB's own tracked files have local edits.
 - README explains where to keep mini-app projects so that updates leave them alone.
 - Two optional agent skills in `skills/`: `pocketlab-device` installs, updates, checks and recovers PocketLAB, and `pocketlab-miniapp` creates, builds and runs mini apps. Linked into an agent, they update with the clone and defer to its AGENTS.md and SDK.md. `tests/test_skills.py` checks the commands and flags in the skills and guides against the CLI.
-
-## 1.1.0 — first public release
-
 - One-line agent setup: the README prompt points any local coding agent at the repository, and AGENTS.md opens with a step-by-step setup playbook.
 - `./pocketlab cards` lists mounted SD cards, their state, and the single command that sets each one up (`--json` for agents). It explains the macOS removable-volume privacy refusal instead of failing with a bare "Operation not permitted".
 - Card setup and diagnostics run on Python 3.9+, including the Python bundled with macOS; building mini apps still needs 3.12+.
