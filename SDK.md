@@ -2,6 +2,8 @@
 
 The development tools and app contract for creating native PocketLAB mini apps on the TrimUI Brick Pro.
 
+> **Note:** The PocketLAB SDK has only been tested on an Apple Silicon Mac. Intel macOS and Linux are configured but untested on real machines, and Windows is not supported.
+
 Start with the [installation guide](docs/INSTALL.md). Run the commands in this guide from the repository folder on your computer; PocketLAB must be open on the Brick for app deployment over USB. Apps reach the Brick through a data cable in its **bottom USB-C port**; the SD card stays in the Brick and is only needed to set up PocketLAB. For an agent-assisted first app, use the [README prompt](README.md#make-your-own-app).
 
 Ordinary apps start with `./pocketlab new miniapps/my-app --name "My app"`. Edit the generated project, then use `./pocketlab run miniapps/my-app --usb` to build, transfer, and open it. The sections below describe the contract already demonstrated by that starter.
@@ -55,7 +57,7 @@ Mini apps must implement their own B/Menu return behavior and clean up audio/inp
 
 ## Install or update PocketLAB
 
-Use `./pocketlab setup --sd CARD` with a mounted working card. An up-to-date runtime is verified in place. An update stages only changed runtime files and keeps a rollback copy, so installed mini apps and their data stay in their original directories. Open PocketLAB on the Brick after updating to complete the startup check. Use the [installation guide](docs/INSTALL.md#choose-a-setup-path) for blank cards and interrupted stock copies, and [troubleshooting](docs/TROUBLESHOOTING.md) for recovery.
+Use `./pocketlab setup --sd CARD` with a mounted working card. An up-to-date runtime is verified in place. An update stages only changed runtime files and keeps a rollback copy, so installed mini apps and their data stay in their original directories. Open PocketLAB on the Brick after updating to complete the startup check. From a git clone, `./pocketlab update --sd CARD` or `./pocketlab update --usb --confirm-model TG4040` first runs `git pull --ff-only`, then performs the same install. It refuses to run when tracked PocketLAB files have local edits; app projects in the git-ignored `miniapps/` folder are never touched. Use the [installation guide](docs/INSTALL.md#choose-a-setup-path) for blank cards and interrupted stock copies, and [troubleshooting](docs/TROUBLESHOOTING.md) for recovery.
 
 ## Direct USB development
 

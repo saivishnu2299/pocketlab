@@ -20,6 +20,8 @@ Follow these steps when a user asks you to set up PocketLAB, for example with th
 6. **Give the user the physical steps:** with the Brick powered off, insert the card. Turn the Brick on and open **Apps → PocketLAB**. The library shows **ESP32 detector** and **Starfall**. After an update, the first launch finishes a startup check and rolls back on its own if the new version fails to start.
 7. **Offer the next step:** creating a first mini app over USB, as described in the next section. Leave the user's card and device alone unless they ask for more.
 
+To update an existing clone and Brick, use `./pocketlab update` with the same `--sd CARD --eject` or `--usb --confirm-model TG4040` route. It pulls with `git pull --ff-only` and stops if tracked files have local edits; never stash, reset or discard those edits without the user's permission.
+
 The Brick does not need to be connected for card setup. With a working stock card inside a powered-on Brick that is connected over USB with ADB, `./pocketlab install --usb --confirm-model TG4040` is an alternative. Use it only after the user confirms the model is a Brick Pro TG4040.
 
 ## Making mini apps

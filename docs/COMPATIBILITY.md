@@ -1,5 +1,7 @@
 # Compatibility
 
+> **Note:** PocketLAB has only been tested on an Apple Silicon Mac. Rows for other computers describe what is configured, not what has been tested.
+
 | Component | Scope |
 | --- | --- |
 | Device | TrimUI Brick Pro TG4040 running TrimUI's stock OS (required), ARM64 Linux, 1024×768. Tested on stock firmware 1.1.1 |

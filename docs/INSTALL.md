@@ -46,6 +46,8 @@ If you only want the two included apps, the device ZIP is also suitable for a [f
 
 ## Computer prerequisites
 
+> **Note:** PocketLAB has only been tested on an Apple Silicon Mac. Intel macOS and Linux are configured but have not been tested on real machines, and Windows has no native setup tools. See [compatibility](COMPATIBILITY.md).
+
 - **Python 3.9+** for card setup and **3.12+** for building mini apps. macOS includes Python 3.9; if `python3` is missing, run `xcode-select --install`. For app development on macOS, `brew install python` or the [Python installer](https://www.python.org/downloads/) provides 3.12+. On Linux, use your distribution's package. Check with `python3 --version`; installing a new Python does not help if your terminal still selects an older one.
 - **ADB, for USB operations only:** install [Android SDK Platform Tools](https://developer.android.com/tools/releases/platform-tools) and make `adb` available in your terminal. On macOS with Homebrew: `brew install --cask android-platform-tools`. On Debian/Ubuntu: `sudo apt install adb`. Check with `adb version`.
 - **A card reader and bsdtar, for new-card preparation:** bsdtar is included in macOS. Debian/Ubuntu: `sudo apt install libarchive-tools`. Check with `bsdtar --version`.

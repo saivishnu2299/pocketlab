@@ -239,6 +239,11 @@ def main():
     route=p.add_mutually_exclusive_group();route.add_argument('--sdk',action='store_true');route.add_argument('--sd');route.add_argument('--usb',action='store_true')
     p.add_argument('--serial');p.add_argument('--confirm-model',choices=['TG4040'])
     p.add_argument('--eject', action='store_true', help='Eject the selected --sd card after successful setup')
+    p=commands.add_parser('update',help='git pull --ff-only, then update PocketLAB on the Brick; mini apps are kept')
+    route=p.add_mutually_exclusive_group();route.add_argument('--sd');route.add_argument('--usb',action='store_true')
+    p.add_argument('--serial');p.add_argument('--confirm-model',choices=['TG4040'])
+    p.add_argument('--eject',action='store_true',help='Eject the --sd card after a successful update')
+    p.add_argument('--no-pull',action='store_true',help='Skip git pull and only update the Brick')
     p=commands.add_parser('build-shell');p.add_argument('--serial')
     commands.add_parser('package')
     p=commands.add_parser('install'); transport(p);p.add_argument('--confirm-model',choices=['TG4040'])
@@ -270,6 +275,13 @@ def main():
         elif args.sd:setup_card(args.sd, eject=args.eject)
         elif args.usb:Brick(args.serial,require_install=False,confirm_model=args.confirm_model).install_shell(bundled_runtime())
         else:guided_setup()
+    elif args.command=='update':
+        if args.eject and not args.sd:
+            parser.error('update --eject requires --sd PATH')
+        if args.usb and not args.confirm_model:
+            parser.error('update --usb requires --confirm-model TG4040')
+        from repo_update import update
+        sys.exit(update(args.sd,args.usb,args.serial,args.confirm_model,args.eject,not args.no_pull))
     elif args.command=='prepare-card':
         from onboarding import prepare_card
         prepare_card(args.sd, args.new_card, resume=args.resume, eject=args.eject)

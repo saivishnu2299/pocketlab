@@ -329,8 +329,8 @@ def prepare_card(value, new_card=False, *, resume=False, eject=False, selected=N
 def diagnostics(sd=None, usb=False, serial=None):
     from release import verify_runtime
     checks=[]
-    def add(name,ok,detail,action=''):
-        checks.append({'name':name,'ok':bool(ok),'detail':detail,'action':action})
+    def add(name,ok,detail,action='',warn=False):
+        checks.append({'name':name,'ok':bool(ok),'detail':detail,'action':action,'warn':warn})
     python = platform.python_version()
     if sys.version_info < (3, 12):
         python += ' (card setup OK; building mini apps needs Python 3.12+)'
@@ -338,6 +338,16 @@ def diagnostics(sd=None, usb=False, serial=None):
     add('host',platform.system() in ('Darwin','Linux') and platform.machine() in ('arm64','aarch64','AMD64','x86_64'),platform.system()+' '+platform.machine(),'Use a supported macOS/Linux host; see docs/COMPATIBILITY.md.')
     try:verify_runtime();add('runtime',True,'Bundled ARM64 runtime and source hashes match.')
     except (ValueError,OSError,KeyError) as e:add('runtime',False,str(e),'Use the complete source release or rebuild its runtime.')
+    from repo_update import changed_tracked_files, is_clone
+    if is_clone():
+        try:
+            changed = changed_tracked_files()
+        except (OSError, subprocess.SubprocessError):
+            changed = []
+        if changed:
+            shown = ', '.join(changed[:5]) + (' …' if len(changed) > 5 else '')
+            add('source', True, f'{len(changed)} PocketLAB file(s) edited locally: {shown}',
+                './pocketlab update needs these kept with "git stash" or discarded first. Mini apps in miniapps/ are unaffected.', warn=True)
     if sd:
         try:
             from card_runtime import PACKAGE_ID, file_hash, package_id, pending_update, runtime_files
@@ -382,8 +392,8 @@ def show_diagnostics(result, as_json=False):
     if as_json:print(json.dumps(result,indent=2))
     else:
         for c in result['checks']:
-            print(('OK   ' if c['ok'] else 'FIX  ')+c['name']+': '+c['detail'])
-            if not c['ok'] and c['action']:print('     '+c['action'])
+            print(('FIX  ' if not c['ok'] else 'WARN ' if c.get('warn') else 'OK   ')+c['name']+': '+c['detail'])
+            if (not c['ok'] or c.get('warn')) and c['action']:print('     '+c['action'])
     return 0 if result['ok'] else 1
 
 

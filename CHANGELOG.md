@@ -1,5 +1,11 @@
 # Changelog
 
+## Unreleased
+
+- `./pocketlab update --sd CARD` or `--usb --confirm-model TG4040` runs `git pull --ff-only` and then updates PocketLAB on the Brick. It stops before changing anything when tracked files have local edits. Mini apps in `miniapps/` are never touched.
+- `doctor` warns, without failing, when PocketLAB's own tracked files have local edits.
+- README explains where to keep mini-app projects so that updates leave them alone.
+
 ## 1.1.0 — first public release
 
 - One-line agent setup: the README prompt points any local coding agent at the repository, and AGENTS.md opens with a step-by-step setup playbook.

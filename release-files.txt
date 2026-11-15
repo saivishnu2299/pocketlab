@@ -66,6 +66,7 @@ tests/sdk_smoke.py
 tests/test_backups.py
 tests/test_recovery.py
 tests/test_release.py
+tests/test_repo_update.py
 tests/test_setup.py
 tests/test_card_workflows.py
 tests/test_usb_setup.py
@@ -79,6 +80,7 @@ tools/native_build.py
 tools/onboarding.py
 tools/pocketlab.py
 tools/release.py
+tools/repo_update.py
 tools/render.py
 tools/stock_card.py
 tools/usb_deploy.py

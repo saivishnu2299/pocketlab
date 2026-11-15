@@ -12,6 +12,8 @@ PocketLAB never replaces firmware, formats your card on its own, or touches your
 - **The Brick's SD card and a card reader, for setup only.** You use them to install or update PocketLAB. After that, the card stays in the Brick.
 - **A USB-C data cable, for making mini apps.** Your agent builds apps on your computer and sends them to the Brick through its bottom USB-C port. You don't take the SD card out again.
 
+> **Note:** PocketLAB has only been tested on an Apple Silicon Mac. Card setup and mini-app building should also work on Intel Macs and Linux, but neither has been tried on a real machine yet. Windows has no setup tools; use the device ZIP. If you try another computer, please [report how it went](docs/VALIDATION.md#reporting-results).
+
 ![PocketLAB library](docs/images/library.png)
 
 ## Set up with your coding agent
@@ -67,6 +69,19 @@ Or do it yourself:
 ```
 
 Building apps also needs Python 3.12+ and [ADB](docs/INSTALL.md#computer-prerequisites). The first build downloads a pinned compiler; you don't need Docker, a VM or a connected Brick to compile. Apps are native C/SDL2 programs with any look you like, and they keep working without the computer. Your app projects in `miniapps/` stay out of Git. The [PocketLAB SDK guide](SDK.md) covers the app contract.
+
+## Update PocketLAB
+
+From your clone, run one command. It pulls the latest PocketLAB with `git pull --ff-only` and then updates the Brick:
+
+```sh
+./pocketlab update --sd /Volumes/YOUR_CARD --eject        # card in this computer
+./pocketlab update --usb --confirm-model TG4040           # Brick connected over USB
+```
+
+Then open PocketLAB on the Brick once to finish its startup check. On the Brick, installed mini apps and their saves are kept.
+
+**Keep your mini apps in `miniapps/`.** Git ignores that folder, so updates never change your app projects. You can also keep them in a folder outside this repository. Avoid saving them anywhere else inside the repository. If you have edited PocketLAB's own files, `update` stops before changing anything and tells you which files those are; `./pocketlab doctor` warns about them as well.
 
 ## The included apps
 
