@@ -1,8 +1,10 @@
 # Install and start creating
 
-Target: stock TrimUI Brick Pro **TG4040**, 1024×768, Linux ARM64. Check the model before installation. PocketLAB opens inside the stock OS; these instructions do not flash firmware. See [compatibility](COMPATIBILITY.md) and [validation status](VALIDATION.md) for tested versus pending behavior.
+Target: TrimUI Brick Pro **TG4040** running **TrimUI's stock OS**, 1024×768, Linux ARM64. Check the model before installation. PocketLAB is an app inside the stock OS and requires it; it does not run on custom firmware or other operating systems. These instructions do not flash firmware. See [compatibility](COMPATIBILITY.md) and [validation status](VALIDATION.md) for tested versus pending behavior.
 
 For agent-assisted setup, use the [copyable prompt in the README](../README.md#set-up-with-your-coding-agent). These tools run on your computer, with the card reader or USB cable connected to that computer.
+
+The SD card is needed only to set up PocketLAB: installing, updating or recovering it, or preparing a new card. Making mini apps never uses the card reader. Leave the card in the Brick and connect the computer to the Brick's **bottom USB-C port** with a data cable; see [First app](#first-app).
 
 ## Choose a setup path
 
@@ -30,7 +32,7 @@ On macOS, a terminal or agent app needs permission to read removable volumes. If
 
 ## Firmware and SD-card requirements
 
-Use a TrimUI Brick Pro TG4040 running its stock firmware. PocketLAB has been tested on **stock firmware 1.1.1** (Settings → About). No minimum supported version has been established, so other releases may behave differently.
+PocketLAB requires a TrimUI Brick Pro TG4040 running TrimUI's stock OS. It installs as an app inside that OS and opens from **Apps**. It does not replace the OS and does not run on custom firmware or alternative operating systems. PocketLAB has been tested on **stock firmware 1.1.1** (Settings → About). No minimum supported version has been established, so other releases may behave differently.
 
 The official SD-base package `v1.0.0-20260626` supplies card contents for new-card preparation. Its version identifies that SD download; it is **not a verified minimum device-firmware version**. PocketLAB setup prepares card files and installs the app without updating or flashing device firmware. Do not upgrade or downgrade firmware solely to match the SD-base tag.
 
@@ -148,6 +150,8 @@ Use `--confirm-model TG4040` only after checking the device model. The first ins
 If something fails, use [troubleshooting](TROUBLESHOOTING.md). Reformatting is not an installation-repair step.
 
 ## First app
+
+App development happens over USB, not through the SD card. Keep the card in the Brick, connect the computer to the Brick's **bottom USB-C port** with a data cable, open PocketLAB, and keep USB Storage closed.
 
 ```sh
 ./pocketlab doctor --usb

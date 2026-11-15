@@ -1,6 +1,6 @@
 # Working on PocketLAB
 
-PocketLAB is an app inside the stock OS of the TrimUI Brick Pro TG4040 (Linux ARM64, 1024×768). It installs only into `Apps/PocketLab` on the SD card. Run every `./pocketlab` command from the repository root on the user's computer.
+PocketLAB is an app inside TrimUI's stock OS on the TrimUI Brick Pro TG4040 (Linux ARM64, 1024×768). It requires that stock OS and does not run on custom firmware. It installs only into `Apps/PocketLab` on the SD card. Run every `./pocketlab` command from the repository root on the user's computer.
 
 ## Setting up a user's Brick
 
@@ -13,7 +13,7 @@ Follow these steps when a user asks you to set up PocketLAB, for example with th
    - If more than one card is listed, ask the user which one belongs to the Brick, using the label and size.
    - On macOS, if the state is `unreadable` or a command fails with "Operation not permitted", the app running you lacks permission to use removable volumes. Ask the user to allow it in System Settings → Privacy & Security → Files & Folders (Removable Volumes), or in Full Disk Access, and then retry. Do not work around this permission.
 4. **Run the `next` command that `cards` printed for the chosen card:**
-   - `stock`, `stock-with-pocketlab` or `unfinished-preparation`: run `./pocketlab setup --sd CARD --eject`. It installs, updates, verifies or resumes. It writes only to `Apps/PocketLab`, or to its own preparation folder.
+   - `stock`, `stock-with-pocketlab` or `unfinished-preparation`: run `./pocketlab setup --sd CARD --eject`. It installs, updates, verifies or resumes. It writes only to `Apps/PocketLab`, or to its own preparation folder. On a working Brick Pro card, keep every existing file as it is.
    - `blank`: confirm with the user first. Explain that setup downloads the official TrimUI SD base (about 400 MiB) and copies about 1.6 GiB in 16,000 files. On a slow card this can take up to an hour, and it resumes if interrupted. Then run `./pocketlab prepare-card --sd CARD --new-card --eject`.
    - `not-a-trimui-card`: stop and ask the user. Never format or erase a card as part of setup. See the formatting rule below.
 5. **Report the result.** If `--eject` reports that the computer is still using the card, setup itself has succeeded; ask the user to eject the card in their file manager. Quote the verification lines from the output, such as "Installed and SHA-256 verified", "updated and verified" or "already installed and verified". If the command failed, report the error and its suggested action; `docs/TROUBLESHOOTING.md` covers the common cases. Do not retry destructive variations.
@@ -24,7 +24,7 @@ The Brick does not need to be connected for card setup. With a working stock car
 
 ## Making mini apps
 
-- App building needs Python 3.12+, ADB and a data cable in the Brick's **bottom** USB-C port, with PocketLAB open and the stock USB Storage app closed. Use the rear HOST port for peripherals. Check with `./pocketlab doctor --usb`.
+- The SD card is only for setting up PocketLAB. App development goes over USB, with the card left in the Brick. App building needs Python 3.12+, ADB and a data cable in the Brick's **bottom** USB-C port, with PocketLAB open and the stock USB Storage app closed. Use the rear HOST port for peripherals. Check with `./pocketlab doctor --usb`.
 - Use `./pocketlab new miniapps/ID --name NAME`, then edit that project's sources, assets and `app.json`. Projects may live outside this repository. Keep the stable ID. Never edit the shell to satisfy an ordinary new-app request.
 - Use `run PATH --usb` or `watch PATH --usb`. The SDK manages its own pinned compiler; do not add Docker, a VM or an extra device runtime.
 - Every app declares `"ready":"file"`, calls `pocketlab_ready()` after its first usable frame, handles SIGTERM gracefully and saves in `POCKETLAB_APP_DATA`. Keep or replace `cover.bmp` with representative artwork.

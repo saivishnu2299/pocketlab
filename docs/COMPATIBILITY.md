@@ -2,7 +2,7 @@
 
 | Component | Scope |
 | --- | --- |
-| Device | Stock TrimUI Brick Pro TG4040, ARM64 Linux, 1024×768. Tested on stock firmware 1.1.1 |
+| Device | TrimUI Brick Pro TG4040 running TrimUI's stock OS (required), ARM64 Linux, 1024×768. Tested on stock firmware 1.1.1 |
 | Original shell | Prior device validation recorded controls/display, Starfall audio/gameplay, passive ESP32 detection, app launch/watch/readiness; app behavior/artwork retained; public branding updated to PocketLAB |
 | Working-card setup | Install, verify, update, recovery and preservation of user files tested on a real SD card from a clean public checkout with macOS's bundled Python 3.9 (14 November 2026). An earlier card ran PocketLAB and both included apps on the Brick. |
 | Preparation, resume, and rollback | Blank-card format, fresh SD-base download, preparation, interruption and resume tested on a real SD card (about 40 minutes on a slow card), plus disposable FAT32 images. This card booted on the Brick (firmware 1.1.1) and started PocketLAB. Startup rollback on the Brick is untested. |
@@ -31,4 +31,4 @@ PocketLAB setup does not update or flash device firmware. Do not upgrade or down
 
 If you run PocketLAB on another firmware release, please report it as described in [Reporting results](VALIDATION.md#reporting-results). Combinations are listed as tested only after they have run on a real Brick; everything else stays unverified.
 
-Do not claim support for other TrimUI models, alternative firmware, every ESP32 board/bridge, or arbitrary web applications.
+PocketLAB requires TrimUI's stock OS. Do not claim support for other TrimUI models, custom or alternative firmware, every ESP32 board/bridge, or arbitrary web applications.

@@ -2,7 +2,7 @@
 
 The development tools and app contract for creating native PocketLAB mini apps on the TrimUI Brick Pro.
 
-Start with the [installation guide](docs/INSTALL.md). Run the commands in this guide from the repository folder on your computer; PocketLAB must be open on the Brick for app deployment over USB. For an agent-assisted first app, use the [README prompt](README.md#make-your-own-app).
+Start with the [installation guide](docs/INSTALL.md). Run the commands in this guide from the repository folder on your computer; PocketLAB must be open on the Brick for app deployment over USB. Apps reach the Brick through a data cable in its **bottom USB-C port**; the SD card stays in the Brick and is only needed to set up PocketLAB. For an agent-assisted first app, use the [README prompt](README.md#make-your-own-app).
 
 Ordinary apps start with `./pocketlab new miniapps/my-app --name "My app"`. Edit the generated project, then use `./pocketlab run miniapps/my-app --usb` to build, transfer, and open it. The sections below describe the contract already demonstrated by that starter.
 

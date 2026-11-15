@@ -6,6 +6,12 @@ PocketLAB is a small app library for the **TrimUI Brick Pro (TG4040)**. It runs 
 
 PocketLAB never replaces firmware, formats your card on its own, or touches your games and saves. Everything lives in `Apps/PocketLab` on the SD card.
 
+## What you need
+
+- **A TrimUI Brick Pro (TG4040) running TrimUI's stock OS.** PocketLAB is an app for that OS. It does not run on custom firmware or other operating systems for the Brick.
+- **The Brick's SD card and a card reader, for setup only.** You use them to install or update PocketLAB. After that, the card stays in the Brick.
+- **A USB-C data cable, for making mini apps.** Your agent builds apps on your computer and sends them to the Brick through its bottom USB-C port. You don't take the SD card out again.
+
 ![PocketLAB library](docs/images/library.png)
 
 ## Set up with your coding agent
@@ -14,7 +20,11 @@ PocketLAB never replaces firmware, formats your card on its own, or touches your
 2. Paste this into a coding agent that can run commands on your computer, such as Claude Code, Codex, Cursor or Devin:
 
 ```text
-Set up PocketLAB on my TrimUI Brick Pro. Clone https://github.com/saivishnu2299/pocketlab and follow the setup steps in its AGENTS.md.
+Set up PocketLAB on my TrimUI Brick Pro. Clone
+https://github.com/saivishnu2299/pocketlab and follow the setup steps
+in its AGENTS.md. If my SD card is already a working Brick Pro card,
+keep every existing file on it: only add or update Apps/PocketLab,
+and never format, erase or replace anything else on the card.
 ```
 
 The agent finds your card, installs or updates PocketLAB, verifies every file and ejects the card. Then put the card back in the Brick, turn it on and open **Apps → PocketLAB**.
@@ -38,7 +48,7 @@ cd pocketlab
 
 ## Make your own app
 
-Connect the Brick's **bottom USB-C port** to your computer with a data cable, open PocketLAB on the Brick, and keep the stock USB Storage app closed. Then give your agent a prompt like this, with your own description in place of the brackets:
+Mini apps are built and installed over USB, not through the SD card, so leave the card in the Brick. Connect the Brick's **bottom USB-C port** to your computer with a data cable, open PocketLAB on the Brick, and keep the stock USB Storage app closed. The rear HOST port is for accessories such as ESP32 boards. Then give your agent a prompt like this, with your own description in place of the brackets:
 
 ```text
 Read AGENTS.md and SDK.md. Create a PocketLAB mini app named "My app"
@@ -67,7 +77,7 @@ D-pad or left stick to select, **A** to open, **B** to go back, **X** for settin
 
 ## Status
 
-PocketLAB targets the stock TG4040 firmware and has been tested on a real Brick Pro running firmware 1.1.1. No minimum firmware version has been established. Setup is tested on macOS (Apple Silicon); Linux is configured but less tested, and Windows users should use the device ZIP. Details are in [compatibility](docs/COMPATIBILITY.md), and untested areas are listed under [known limitations](docs/VALIDATION.md#known-limitations). If something goes wrong, see [troubleshooting](docs/TROUBLESHOOTING.md) or open an issue. Report security problems privately as described in [SECURITY.md](SECURITY.md).
+PocketLAB requires TrimUI's stock OS on the TG4040 and has been tested on a real Brick Pro running firmware 1.1.1. No minimum firmware version has been established. Setup is tested on macOS (Apple Silicon); Linux is configured but less tested, and Windows users should use the device ZIP. Details are in [compatibility](docs/COMPATIBILITY.md), and untested areas are listed under [known limitations](docs/VALIDATION.md#known-limitations). If something goes wrong, see [troubleshooting](docs/TROUBLESHOOTING.md) or open an issue. Report security problems privately as described in [SECURITY.md](SECURITY.md).
 
 ## Develop PocketLAB itself
 
