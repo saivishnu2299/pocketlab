@@ -18,7 +18,19 @@ jobs:
           python-version: '3.12'
       - name: macOS test dependencies
         if: runner.os == 'macOS'
-        run: brew install sdl2
+        # Homebrew's sdl2 now resolves to SDL3-based sdl2-compat, which stalls
+        # the cover tests. Keep native SDL2 for the frozen renderer checks.
+        run: |
+          curl --fail --location --retry 3 \
+            https://github.com/libsdl-org/SDL/releases/download/release-2.32.10/SDL2-2.32.10.tar.gz \
+            --output "$RUNNER_TEMP/SDL2-2.32.10.tar.gz"
+          echo "5f5993c530f084535c65a6879e9b26ad441169b3e25d789d83287040a9ca5165  $RUNNER_TEMP/SDL2-2.32.10.tar.gz" | shasum -a 256 --check
+          tar -xzf "$RUNNER_TEMP/SDL2-2.32.10.tar.gz" -C "$RUNNER_TEMP"
+          cd "$RUNNER_TEMP/SDL2-2.32.10"
+          ./configure --prefix="$RUNNER_TEMP/sdl2" --disable-static
+          make -j"$(sysctl -n hw.ncpu)"
+          make install
+          echo "$RUNNER_TEMP/sdl2/bin" >> "$GITHUB_PATH"
       - name: Linux test dependencies
         if: runner.os == 'Linux'
         run: sudo apt-get update && sudo apt-get install -y clang make libsdl2-dev libarchive-tools
