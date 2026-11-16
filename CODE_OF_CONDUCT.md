@@ -19,6 +19,8 @@ PocketLAB is a small hobby project. Everyone who takes part, in issues, pull req
 
 ## Reporting and enforcement
 
-Report a problem with GitHub's **Report content** option on the comment, issue or pull request, choosing to report it to the repository maintainers. For anything that must stay private, use the private reporting form described in [SECURITY.md](SECURITY.md) and start the title with "Conduct".
+To report harassment, spam or other abusive conduct, use **Report content** on the issue, pull request, discussion or comment when that option is available. Choose **Report abuse to GitHub Support** if GitHub offers a choice. You can also sign in and use [GitHub Support’s abuse form](https://support.github.com/contact/report-abuse?category=report-abuse&report=other&report_type=unspecified).
 
-Maintainers may edit or remove content, lock conversations, or block people who break this code. Reports are handled confidentially.
+Include links to the relevant content and a brief description of what happened. Share sensitive details through the support form. For a security vulnerability in PocketLAB, follow [SECURITY.md](SECURITY.md).
+
+Maintainers may edit or remove content, lock conversations, or block people who break this code.
