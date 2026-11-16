@@ -44,7 +44,7 @@ Keep these points from `SDK.md` while writing the app:
 
 Match the request. Install the app on the Brick only when the user wants it running there. If they asked only to build, compile-check or preview, use only step 4 below and don't touch the Brick.
 
-1. To run on the Brick, ask the user to connect a data cable to the Brick's **bottom** USB-C port, open PocketLAB on the Brick, and close the stock USB Storage app. Then run `./pocketlab doctor --usb`. Building needs Python 3.12+ and ADB; `doctor` names anything missing.
+1. To run on the Brick, ask the user to connect a data cable to the Brick's **bottom** USB-C port, open PocketLAB on the Brick, and close the stock USB Storage app. Then run `./pocketlab doctor --usb`. Building needs Python 3.12+ and ADB; `doctor` names anything missing. If either is missing, follow the requirements in `docs/INSTALL.md`.
 2. Build, upload and open the app in one step: `./pocketlab run PATH --usb`. For live iteration, `./pocketlab watch PATH --usb` rebuilds and reopens it on every save; Ctrl-C stops watching and leaves the app installed.
 3. Useful commands: `./pocketlab status --usb` (running app and readiness), `./pocketlab logs --usb` (launcher log), `./pocketlab open ID --usb`, `./pocketlab library --usb` (back to the library).
 4. Build only, with no Brick and no ADB needed: `./pocketlab build-app PATH` checks the ARM64 build. For a desktop preview, `./pocketlab build-app PATH --host` builds a host binary instead; rebuild without `--host` before deploying (`run` does this for you).
