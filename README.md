@@ -2,128 +2,162 @@
 
 **Create mini apps for your Brick Pro with your coding agent.**
 
-PocketLAB is a small app library for the **TrimUI Brick Pro (TG4040)**. It runs inside the stock OS and opens from **Apps → PocketLAB**. It comes with two apps: **ESP32 detector**, for inspecting USB boards, and **Starfall**, an offline space shooter. After that, you describe new mini apps to your coding agent, and it builds them and sends them to the Brick over USB.
+PocketLAB is an app library for the **TrimUI Brick Pro (TG4040)** running **TrimUI’s stock operating system**. Open it from **Apps → PocketLAB** to play **Starfall**, an offline space shooter, or use **ESP32 detector** to identify compatible USB boards. You can also describe a game or tool in plain language and have a coding agent build it on your computer and send it to the Brick.
 
-PocketLAB never replaces firmware, formats your card on its own, or touches your games and saves. Everything lives in `Apps/PocketLab` on the SD card.
+![PocketLAB library showing ESP32 detector and Starfall](docs/images/library.png)
+
+| I want to… | Start here |
+| --- | --- |
+| Install PocketLAB on the card I already use with my Brick Pro | [Copy one folder by hand](#set-up-yourself) or [ask a coding agent to install it](#set-up-with-your-coding-agent) |
+| Start with a blank card, or keep the card in the Brick for setup | [Use the setup menu or install over USB](#setup-menu-and-other-install-options) |
+| Make my own game or tool | [Make your own app](#make-your-own-app) after installing PocketLAB |
+| Update an existing installation | [Update PocketLAB](#update-pocketlab) so your apps and saves stay in place |
 
 ## What you need
 
-- **A TrimUI Brick Pro (TG4040) running TrimUI's stock OS.** PocketLAB is an app for that OS. It does not run on custom firmware or other operating systems for the Brick.
-- **The Brick's SD card and a card reader, for setup only.** You use them to install or update PocketLAB. After that, the card stays in the Brick.
-- **A USB-C data cable, for making mini apps.** Your agent builds apps on your computer and sends them to the Brick through its bottom USB-C port. You don't take the SD card out again.
-
-> **Note:** PocketLAB has only been tested on an Apple Silicon Mac. Card setup and mini-app building should also work on Intel Macs and Linux, but neither has been tried on a real machine yet. Windows has no setup tools; use the device ZIP. If you try another computer, please [report how it went](docs/VALIDATION.md#reporting-results).
-
-![PocketLAB library](docs/images/library.png)
-
-## Set up with your coding agent
-
-1. Turn the Brick off, take out its SD card, and put the card in your computer's card reader.
-2. Paste this into a coding agent that can run commands on your computer, such as Claude Code, Codex, Cursor or Devin:
-
-```text
-Set up PocketLAB on my TrimUI Brick Pro. Clone
-https://github.com/saivishnu2299/pocketlab and follow the setup steps
-in its AGENTS.md. If my SD card is already a working Brick Pro card,
-keep every existing file on it: only add or update Apps/PocketLab,
-and never format, erase or replace anything else on the card.
-```
-
-The agent finds your card, installs or updates PocketLAB, verifies every file and ejects the card. Then put the card back in the Brick, turn it on and open **Apps → PocketLAB**.
-
-A cloud-only agent can't reach your card reader, so use one that runs on your computer.
+- **A TrimUI Brick Pro (TG4040) with its original TrimUI operating system.** Check the model before starting. PocketLAB has been tested on stock firmware **1.1.1**; other firmware versions are unverified. Other Brick models and custom firmware are outside the supported setup.
+- **A microSD card.** Use the card your Brick already boots from for the quickest setup. To install from a computer, use a card reader or adapter, or follow the USB option below. PocketLAB installs under `Apps/PocketLab` and leaves your games, saves, other apps and firmware alone.
+- **For making apps:** a Mac or Linux computer and a **USB-C cable that carries data**. A charging-only cable won’t work. The SDK has been tested on Apple Silicon Macs; Intel Macs and Linux are configured but unverified on real machines. On Windows, you can copy the app to a working card and use the included apps; there’s no native PocketLAB SDK for Windows. See [compatibility](docs/COMPATIBILITY.md).
 
 ## Set up yourself
 
-**Any computer, no tools:** download `PocketLAB-<version>-device.zip` from [Releases](https://github.com/saivishnu2299/pocketlab/releases), or use **Code → Download ZIP** on this page and open its `runtime` folder. Copy the `Apps/PocketLab` folder into the `Apps` folder on your card, so that `Apps/PocketLab/launch.sh` exists. Do this only for a first install. To update, use the commands below, which keep your apps and saves.
+**First install on a working card (Mac, Windows or Linux).** You can do this in Finder, File Explorer or your Linux file manager. You don’t need a coding agent or a terminal.
 
-**macOS or Linux terminal:** this needs Python 3.9 or newer, which macOS includes.
+1. On the [GitHub Releases page](https://github.com/saivishnu2299/pocketlab/releases), open the latest release and download **`PocketLAB-…-device.zip`** from **Assets**. Unzip it. If you have the full project instead, the same app folder is inside `runtime/Apps/`.
+2. Turn the Brick **completely off**, remove its microSD card and insert it into the computer. Open the card in your file manager. A working stock card has `Apps` and `Roms` folders. If yours is blank, go to [blank-card setup](#setup-menu-and-other-install-options).
+3. Inside the unzipped download, open `Apps` and copy the **`PocketLab` folder** into the card’s existing **`Apps` folder**. To check the result, open `Apps → PocketLab` on the card and look for `launch.sh` directly inside. If the card already contains `Apps/PocketLab`, stop and use [the update instructions](#update-pocketlab). Replacing that folder by hand can remove installed mini apps and saves.
 
-```sh
-git clone https://github.com/saivishnu2299/pocketlab
-cd pocketlab
-./pocketlab cards                          # finds your card and prints the command for it
-./pocketlab setup --sd /Volumes/YOUR_CARD --eject
+### Open PocketLAB on the Brick
+
+If the card is still mounted on the computer, use **Eject** or **Safely Remove** before taking it out. Put the card back in the powered-off Brick, turn it on and open **Apps → PocketLAB**. A fresh install shows **ESP32 detector** and **Starfall**.
+
+Use the **D-pad or left stick** to select an app, **A** to open it, and **B** to go back. In the library, **X** opens settings and **Y** opens the guide. Try Starfall first; you don’t need to connect anything. To use ESP32 detector, connect your board to the Brick’s rear **HOST** port. See the [device guide](docs/DEVICE.md) for app controls and USB board support.
+
+## Set up with your coding agent
+
+Use a coding agent that can run commands **on the computer with your card reader**. A web chat or a cloud-only agent can explain the steps but can’t reach the card. With the Brick off, put its card in your computer, then paste this:
+
+```text
+Set up PocketLAB on my TrimUI Brick Pro (TG4040). Get the project from
+https://github.com/saivishnu2299/pocketlab and follow the setup steps in
+AGENTS.md and skills/pocketlab-device/SKILL.md. Explain any steps I need
+to do myself. Check which card is the Brick's before writing to it.
+On a working card, install or update only Apps/PocketLab and preserve my
+apps and saves. Ask before preparing a blank card. Do not format or
+erase anything. Verify the install and let me know when I can put the
+card back in the Brick and open Apps > PocketLAB.
 ```
 
-`setup` copies only `Apps/PocketLab`, checks every file against its SHA-256 manifest and keeps a rollback copy when it updates. A blank card needs the official TrimUI files first; `cards` tells you if it does. See the [installation guide](docs/INSTALL.md) for blank cards, USB installs and recovery.
+The installer checks the copied files and can safely update an existing installation. If setup verifies the files but can’t eject the card, eject it in your file manager before removing it.
+
+## Setup menu and other install options
+
+The setup tools need **Python 3.9 or newer** on macOS or Linux. Download and unzip **`PocketLAB-…-source.zip`** from [Releases](https://github.com/saivishnu2299/pocketlab/releases), or clone the [PocketLAB project](https://github.com/saivishnu2299/pocketlab). If Python is missing, follow the [prerequisite instructions](docs/INSTALL.md#computer-prerequisites).
+
+Run `./pocketlab` commands from the project folder that contains `AGENTS.md` and `pocketlab`. On a Mac, open Terminal, type `cd` followed by a space, drag that folder into the Terminal window and press **Enter**. On Linux, use **Open in Terminal** from the folder’s file manager menu if available.
+
+- **Working card:** turn the Brick off and insert its card into the computer. On macOS, open `Setup.command` from the project folder. You can also run `./pocketlab setup` in a terminal on macOS or Linux. In the menu, select the card by name and size; it should say **Install or verify PocketLAB**. For setup without the menu, run `./pocketlab doctor` and `./pocketlab cards`, then copy the `next:` command printed for your card. Once the files are verified, [open PocketLAB on the Brick](#open-pocketlab-on-the-brick).
+- **Blank card:** use [new-card setup](docs/INSTALL.md#new-card) on an empty FAT32 card. This downloads about 400 MiB of official TrimUI card files and copies about 1.6 GiB. A slow card can take about an hour; leave it connected until verification finishes. If interrupted, reconnect the same card and [resume the copy](docs/INSTALL.md#resume-an-interrupted-copy). Use the separate [formatting steps](docs/INSTALL.md#format-and-then-prepare-a-new-card) only for a card you mean to erase.
+- **Card still in the Brick:** [install over USB](docs/INSTALL.md#first-installation-over-usb) if you already have a working stock card in a powered-on TG4040 and the USB tools on your computer. After the first install, open **Apps → PocketLAB** on the Brick.
 
 ## Make your own app
 
-Mini apps are built and installed over USB, not through the SD card, so leave the card in the Brick. Connect the Brick's **bottom USB-C port** to your computer with a data cable, open PocketLAB on the Brick, and keep the stock USB Storage app closed. The rear HOST port is for accessories such as ESP32 boards. Then give your agent a prompt like this, with your own description in place of the brackets:
+Start with something you can test in a minute: a tally counter, a study timer, a dice roller or a one-screen game. You can ask a local coding agent to write the code. It runs on your computer; the finished mini app runs on the Brick and can work unplugged. An app that uses an online service still needs a network for that feature.
+
+### Get ready to build
+
+1. **Open the full PocketLAB project on your computer.** Use the [source ZIP or a Git clone](#setup-menu-and-other-install-options). If you used the device ZIP to install PocketLAB, leave the Brick as it is and get the source separately. The device ZIP contains the ready-to-run library; the full project contains the PocketLAB SDK, which builds new apps.
+2. **Install Python 3.12 or newer and ADB.** ADB is the tool your computer uses to send builds over USB. Ask your agent to check `python3 --version` and `adb version` in its terminal, or follow the [computer setup steps](docs/INSTALL.md#computer-prerequisites). The first build needs internet to download the compiler and its files. Later builds can reuse the download and work offline.
+3. **Connect the Brick.** Leave the SD card inside. Plug the data cable into the **bottom USB-C port**, wake the Brick, and open **Apps → PocketLAB**. Keep the stock **USB Storage** app closed. The rear **HOST** port is for accessories.
+
+### Describe your idea to an agent
+
+Open the full PocketLAB project folder in your local coding agent and paste this example. Change the name, what the app does, and the controls to match your idea:
 
 ```text
-Read AGENTS.md and SDK.md. Create a PocketLAB mini app named "My app"
-in miniapps/my-app that [describe what it does and how it should look].
-Give it its own cover artwork, build and run it on my Brick over USB,
-and tell me what to test.
+Make me a PocketLAB mini app called Study Timer. Show a large countdown
+that starts at 25 minutes. Before starting, let me change the duration
+with the D-pad. A starts or pauses, and B returns to the library. Remember
+my last chosen duration. Put the controls on screen and give it a cover.
+
+Read AGENTS.md, SDK.md and skills/pocketlab-miniapp/SKILL.md. Use a new,
+unused folder under miniapps/ and leave the PocketLAB library alone.
+Check my USB connection, then build, install and open the app on my Brick.
+Tell me how to try it, and explain any steps I need to do myself.
 ```
 
-Or do it yourself:
+To revise it, ask the agent to open the **same** project and run it again. For example: “Change Study Timer so X resets the countdown, put that on the screen, and send the update to my Brick.” Keeping the same project folder keeps the app’s identity and saved data. For a different app, use a new folder name that isn’t already used on the Brick.
+
+### Try the starter or build by hand
+
+From the full PocketLAB project folder on your computer, run these commands one at a time. If you already have an app with the `first-counter` ID on your Brick, substitute a new folder name in the commands so you don’t replace it.
 
 ```sh
 ./pocketlab doctor --usb
-./pocketlab new miniapps/my-app --name "My app"
-./pocketlab run miniapps/my-app --usb      # build, upload and open on the Brick
-./pocketlab watch miniapps/my-app --usb    # rebuild and reopen on every save
+./pocketlab new miniapps/first-counter --name "First Counter"
+./pocketlab run miniapps/first-counter --usb
 ```
 
-Building apps also needs Python 3.12+ and [ADB](docs/INSTALL.md#computer-prerequisites). The first build downloads a pinned compiler; you don't need Docker, a VM or a connected Brick to compile. Apps are native C/SDL2 programs with any look you like, and they keep working without the computer. Your app projects in `miniapps/` stay out of Git. The [PocketLAB SDK guide](SDK.md) covers the app contract.
+`doctor` checks the USB connection and whether PocketLAB is running. Check for **OK** next to `usb` and `controller`, and make sure the reported Python version is **3.12 or newer**. `new` creates a working counter and its library cover; `run` builds, transfers and opens it. On the Brick, press **A** a few times, then **B** to return to the library. Unplug the computer, reopen **First Counter**, and check that the number you counted is still there.
+
+Edit `app.c` for what the app does, `app.json` for its library name and description, or `cover.bmp` for its picture. Run the same `run` command after each edit, or use `./pocketlab watch miniapps/first-counter --usb` to rebuild and reopen it automatically when you save. Press **Ctrl+C** in the terminal to stop watching; the app stays installed. The [PocketLAB SDK guide](SDK.md) explains controller buttons, artwork, saving, and how to build without the Brick connected.
+
+**Before calling your own app finished:** try its buttons, check that text is readable, listen if it plays sound, and test any accessory it needs. Return to the library, unplug the cable, reopen the app and check that what you saved is still there. Seeing the first screen confirms it opened; these checks tell you whether it works the way you intended.
+
+**Back up your work.** The `miniapps/` folder on your computer holds the editable projects. Git ignores your projects there, so keep a separate backup of anything you want to keep. The Brick’s card holds the installed copies and their saves under `Apps/PocketLab`; those are separate from the editable projects.
 
 ## Update PocketLAB
 
-From your clone, run one command. It pulls the latest PocketLAB with `git pull --ff-only` and then updates the Brick:
+- **Downloaded a ZIP?** On macOS or Linux, download and extract the **new source ZIP**, then use its [setup menu](#setup-menu-and-other-install-options) with your working card, or use its [USB installer](docs/INSTALL.md#first-installation-over-usb). Copy any projects you want to keep working on from the old `miniapps/` folder into the new one, or keep them in a separate folder.
+- **Cloned the project with Git?** Run one of the commands below from your clone. The updater pulls the latest project files first and stops if you’ve edited PocketLAB’s own files. Projects in `miniapps/` are kept.
 
 ```sh
-./pocketlab update --sd /Volumes/YOUR_CARD --eject        # card in this computer
-./pocketlab update --usb --confirm-model TG4040           # Brick connected over USB
+./pocketlab update --sd "/Volumes/YOUR_CARD" --eject
+./pocketlab update --usb --confirm-model TG4040
 ```
 
-Then open PocketLAB on the Brick once to finish its startup check. On the Brick, installed mini apps and their saves are kept.
+For the first command, replace `/Volumes/YOUR_CARD` with the actual card path printed by `./pocketlab cards`. For the second, leave the card in the powered-on Brick, use the bottom USB-C port and confirm the model is TG4040 before running it.
 
-**Keep your mini apps in `miniapps/`.** Git ignores that folder, so updates never change your app projects. You can also keep them in a folder outside this repository. Avoid saving them anywhere else inside the repository. If you have edited PocketLAB's own files, `update` stops before changing anything and tells you which files those are; `./pocketlab doctor` warns about them as well.
+The installer keeps your installed apps, saves and scores and retains a backup of the previous PocketLAB version. **Open PocketLAB on the Brick once after updating** to finish the startup check. If an update was interrupted or PocketLAB won’t open, follow the [recovery steps](docs/TROUBLESHOOTING.md) to check or restore the installation.
+
+If you decide to remove PocketLAB, see [how to back up your data and uninstall](docs/DEVICE.md#data-and-removal).
+
+## If you get stuck
+
+| What you see | What to try |
+| --- | --- |
+| PocketLAB doesn’t show up under **Apps** | Check that `launch.sh` is directly inside `Apps/PocketLab` on the card, then safely eject it and start the Brick with the card inserted. |
+| The card is missing from setup, or macOS says **Operation not permitted** | Check whether it appears in your file manager. On macOS, allow your Terminal or agent app to read **Removable Volumes** in **System Settings → Privacy & Security → Files & Folders**. See [card troubleshooting](docs/TROUBLESHOOTING.md). |
+| The Brick isn’t found over USB | Try a cable you know can transfer files, use the **bottom port**, wake the Brick, close USB Storage and open PocketLAB. Run `./pocketlab doctor --usb` again. |
+| Your app won’t build or open | Copy the error into your coding agent, or see [build and launch troubleshooting](docs/TROUBLESHOOTING.md). If the USB reply was lost, check `./pocketlab status --usb` before retrying. |
+
+See the [validation record](docs/VALIDATION.md) for what has been tested. If you still need help, [report an issue](https://github.com/saivishnu2299/pocketlab/issues) with your Brick model, firmware, computer OS and the error you saw. Remove personal paths, device serial numbers and saved app data from any logs you share. Report security problems privately as described in [SECURITY.md](SECURITY.md).
 
 ## Agent skills (optional)
 
-The `skills/` folder has two step-by-step guides for coding agents. **pocketlab-device** installs, updates, checks and recovers PocketLAB on the Brick. **pocketlab-miniapp** creates, builds and runs mini apps.
+The prompts above work without installing skills. The project includes two guides an agent can read: [pocketlab-device](skills/pocketlab-device/SKILL.md) for setup, updates and recovery, and [pocketlab-miniapp](skills/pocketlab-miniapp/SKILL.md) for creating and running apps. Install them if you want your agent to find them even when you start in a different folder.
 
-Without installing anything, an agent working in this repository reads AGENTS.md, which tells it where these files are. It can then read them like any other document. Your agent doesn't load them as skills on its own until you install them. Installing them lets the agent choose the right one by itself, in any folder, including an app project kept outside this repository.
+<details>
+<summary>Link the skills for Claude Code or Codex</summary>
 
-To install them, link the two folders instead of copying them. `./pocketlab update` then refreshes them along with the rest of your clone. Run one of these from the repository folder:
+Run the two lines for your agent from the full PocketLAB project folder. Linking keeps the skills tied to this folder so future project updates also refresh the skills.
 
 ```sh
-# Claude Code: creates ~/.claude/skills/pocketlab-device and ~/.claude/skills/pocketlab-miniapp
+# Claude Code
 mkdir -p ~/.claude/skills
 ln -s "$PWD/skills/pocketlab-device" "$PWD/skills/pocketlab-miniapp" ~/.claude/skills/
 
-# Codex: creates ~/.agents/skills/pocketlab-device and ~/.agents/skills/pocketlab-miniapp
+# Codex
 mkdir -p ~/.agents/skills
 ln -s "$PWD/skills/pocketlab-device" "$PWD/skills/pocketlab-miniapp" ~/.agents/skills/
 ```
 
-Each link must be a folder named after the skill with `SKILL.md` directly inside it. Start a new agent session afterwards so it picks them up. For another agent, link the same two folders into the personal skills folder named in that agent's documentation. If you move your clone, create the links again. If you copied the folders instead of linking them, each skill checks your clone and follows its newer copy when the two differ.
+Start a new agent session after linking. If you move the project, recreate the links. For other agents, use the personal skills folder named in their documentation.
 
-## The included apps
-
-- **ESP32 detector:** connect a board to the rear HOST USB-C port to see what is attached. It is careful to tell a serial bridge apart from a verified ESP32. An optional chip check, which you confirm on screen, may reset the board but never writes flash.
-- **Starfall:** an offline shooter with original graphics and synthesized sound, three difficulties, a shield and saved high scores.
-
-D-pad or left stick to select, **A** to open, **B** to go back, **X** for settings and **Y** for the guide. See the [device guide](docs/DEVICE.md) for complete controls.
-
-## Status
-
-PocketLAB requires TrimUI's stock OS on the TG4040 and has been tested on a real Brick Pro running firmware 1.1.1. No minimum firmware version has been established. Setup is tested on macOS (Apple Silicon); Linux is configured but less tested, and Windows users should use the device ZIP. Details are in [compatibility](docs/COMPATIBILITY.md), and untested areas are listed under [known limitations](docs/VALIDATION.md#known-limitations). If something goes wrong, see [troubleshooting](docs/TROUBLESHOOTING.md) or open an issue. Report security problems privately as described in [SECURITY.md](SECURITY.md).
+</details>
 
 ## Develop PocketLAB itself
 
-```sh
-make host       # native preview; Clang and SDL2 development files required
-make test       # core, protocol, installer, recovery and release checks
-make brick      # device-independent ARM64 build
-make renders    # deterministic scene renders and frozen-UI comparisons
-make sdk-test   # generated app lifecycle and ARM build smoke test
-```
+See [CONTRIBUTING](CONTRIBUTING.md) for building and testing the library and [RELEASING](docs/RELEASING.md) for making release bundles.
 
-See [CONTRIBUTING](CONTRIBUTING.md) and the [release procedure](docs/RELEASING.md).
-
-PocketLAB is MIT licensed. Fonts and third-party components keep their own notices in [THIRD_PARTY.md](THIRD_PARTY.md). The artwork and sound are original. PocketLAB is an independent project and is not affiliated with TrimUI, which provides the stock OS and SD base.
+PocketLAB is [MIT licensed](LICENSE). Fonts and third-party components keep their own notices in [THIRD_PARTY.md](THIRD_PARTY.md). The artwork and sound are original. PocketLAB is an independent project and is not affiliated with TrimUI, which provides the stock OS and SD base.
