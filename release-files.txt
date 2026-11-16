@@ -32,6 +32,7 @@ docs/VALIDATION.md
 docs/images/detector.png
 docs/images/intro.png
 docs/images/library.png
+docs/images/pocketlab-logo.png
 packaging/config.json
 packaging/launch.sh
 pocketlab

@@ -1,6 +1,10 @@
 # PocketLAB for TrimUI Brick Pro
 
+<img src="docs/images/pocketlab-logo.png" alt="PocketLAB" width="540">
+
 **Create mini apps for your Brick Pro with your coding agent.**
+
+An [OpusLABS project](https://www.sainathkrishnamurthy.com/opuslabs/).
 
 PocketLAB is an app library for the **TrimUI Brick Pro (TG4040)** running **TrimUI’s stock operating system**. Open it from **Apps → PocketLAB** to play **Starfall**, an offline space shooter, or use **ESP32 detector** to identify compatible USB boards. You can also describe a game or tool in plain language and have a coding agent build it on your computer and send it to the Brick.
 
