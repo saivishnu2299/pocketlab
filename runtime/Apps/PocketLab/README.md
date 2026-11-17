@@ -36,3 +36,9 @@ Three lives, diving enemies, aimed shots, later armored enemies, hit streaks, sy
 Settings, scores, logs, and app data live under Apps/PocketLab/data. Independent app packages live under Apps/PocketLab/apps. For updates, use the source-bundle installer to keep these directories in place. To uninstall, back up the apps and data you want to keep, then remove `Apps/PocketLab`. The OS, firmware, ROMs, and other applications remain separate.
 
 If launch returns to the stock menu, inspect data/pocketlab.log and data/pocketlab.previous.log. The source release includes diagnostics and recovery instructions. No microphone, lighting, vibration, or additional sensor API is promised by this SDK.
+
+## License and source code
+
+Copyright (c) 2026 PocketLAB contributors. PocketLAB is licensed under the GNU Affero General Public License, version 3 only (`AGPL-3.0-only`). The bundle includes `LICENSE` and `THIRD_PARTY.md`.
+
+For the corresponding source, download the matching `PocketLAB-<version>-source.zip` alongside the device ZIP on the [PocketLAB releases page](https://github.com/saivishnu2299/pocketlab/releases). If you got the bundled runtime from the repository, use the source from the same checkout or commit.
