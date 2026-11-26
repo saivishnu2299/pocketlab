@@ -39,6 +39,6 @@ If launch returns to the stock menu, inspect data/pocketlab.log and data/pocketl
 
 ## License and source code
 
-Copyright (c) 2026 PocketLAB contributors. PocketLAB is licensed under the GNU Affero General Public License, version 3 only (`AGPL-3.0-only`). The bundle includes `LICENSE` and `THIRD_PARTY.md`.
+Copyright (c) 2026 PocketLAB contributors. PocketLAB is licensed under the MIT License. The bundle includes `LICENSE` and the third-party notices in `THIRD_PARTY.md`.
 
 For the corresponding source, download the matching `PocketLAB-<version>-source.zip` alongside the device ZIP on the [PocketLAB releases page](https://github.com/saivishnu2299/pocketlab/releases). If you got the bundled runtime from the repository, use the source from the same checkout or commit.

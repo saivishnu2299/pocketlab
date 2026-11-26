@@ -167,4 +167,4 @@ Start a new agent session after linking. If you move the project, recreate the l
 
 See [CONTRIBUTING](CONTRIBUTING.md) for building and testing the library and [RELEASING](docs/RELEASING.md) for making release bundles.
 
-Copyright (c) 2026 PocketLAB contributors. PocketLAB is licensed under the [GNU Affero General Public License, version 3 only](LICENSE) (`AGPL-3.0-only`). Fonts and third-party components keep their own notices in [THIRD_PARTY.md](THIRD_PARTY.md). The artwork and sound are original. PocketLAB is an independent project and is not affiliated with TrimUI, which provides the stock OS and SD base.
+Copyright (c) 2026 PocketLAB contributors. PocketLAB is licensed under the [MIT License](LICENSE). Fonts and third-party components keep their own notices in [THIRD_PARTY.md](THIRD_PARTY.md). The artwork and sound are original. PocketLAB is an independent project and is not affiliated with TrimUI, which provides the stock OS and SD base.
